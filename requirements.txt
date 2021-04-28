@@ -1,0 +1,9 @@
+appdirs==1.4.4
+beautifulsoup4==4.9.3
+bs4==0.0.1
+pyee==8.1.0
+pyppeteer==0.2.5
+soupsieve==2.2.1
+tqdm==4.60.0
+urllib3==1.26.4
+websockets==8.1
