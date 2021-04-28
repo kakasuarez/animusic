@@ -1,0 +1,2 @@
+# animusic
+aniplaylist.com scraper
