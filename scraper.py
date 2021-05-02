@@ -9,6 +9,7 @@ def get_query():
 
 async def main():
     query = get_query()
+    print("Scraping...Please wait.\n")
     browser = await launch()
     page = await browser.newPage()
     await page.goto("https://aniplaylist.com/{}".format(query), timeout=1000000)
@@ -33,10 +34,12 @@ async def main():
             playlists.append(i)
         else:
             songs.append(i)
-    print(f"Found {len(songs)} songs, {len(playlists)} playlists.")
-    for index, song in enumerate(songs):
-        print(str(index) + ". ", song)
-    i = input("Please enter index of song you want to open.\n")
-    songs[int(i)].open_in_browser()
+    print(f"Found {len(songs)} song(s), {len(playlists)} playlist(s).")
+    while True:
+        for index, song in enumerate(songs):
+            print(str(index) + ". ", song)
+        i = input("Please enter index of song you want to open or press q to exit.\n")
+        if i == "q": break
+        songs[int(i)].open_in_browser()
 
 asyncio.get_event_loop().run_until_complete(main())
