@@ -7,8 +7,12 @@ from items import Item
 def get_query():
     return input("Please enter search query:\n").replace(" ", "-")
 
+def get_preference():
+    return input("Please mention your preference for opening tracks (press w for web version or a for desktop app).\n")
+
 async def main():
     query = get_query()
+    preference = get_preference()
     print("Scraping...Please wait.\n")
     browser = await launch()
     page = await browser.newPage()
@@ -40,6 +44,12 @@ async def main():
             print(str(index) + ". ", song)
         i = input("Please enter index of song you want to open or press q to exit.\n")
         if i == "q": break
-        songs[int(i)].open_in_browser()
+        chosen_song = songs[int(i)]
+        if preference == "w":
+            chosen_song.open_in_browser()
+            print(f"Opened {song} in browser!")
+        else:
+            chosen_song.open_in_app()
+            print(f"Opened {song} in app!")
 
 asyncio.get_event_loop().run_until_complete(main())
