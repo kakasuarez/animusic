@@ -47,9 +47,9 @@ async def main():
         chosen_song = songs[int(i)]
         if preference == "w":
             chosen_song.open_in_browser()
-            print(f"Opened {song} in browser!")
+            print(f"Opened {chosen_song} in browser!")
         else:
             chosen_song.open_in_app()
-            print(f"Opened {song} in app!")
+            print(f"Opened {chosen_song} in app!")
 
 asyncio.get_event_loop().run_until_complete(main())
