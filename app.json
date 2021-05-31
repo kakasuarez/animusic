@@ -1,0 +1,13 @@
+{
+	"name": "Animusic API",
+	"description": "Unofficial API for animusic.com",
+	"repository": "https://github.com/kakasuarez/animusic",
+	"buildpacks": [
+		{
+			"url": "https://github.com/heroku/heroku-buildpack-google-chrome"
+		},
+		{
+			"url": "heroku/python"
+		}
+	]
+}
