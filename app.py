@@ -1,6 +1,7 @@
 from quart import Quart, request, jsonify
 import asyncio
 import scraper
+import os
 
 app = Quart(__name__)
 
@@ -11,4 +12,5 @@ async def hello():
     return jsonify({"songs": songs, "playlists": playlists})
 
 if __name__ == "__main__":
-    asyncio.run(app.run_task(host='0.0.0.0'))
+    port = int(os.environ.get('PORT', 5000))
+    asyncio.run(app.run_task(host='0.0.0.0', port=port))
