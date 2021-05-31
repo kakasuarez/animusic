@@ -11,4 +11,4 @@ async def hello():
     return jsonify({"songs": songs, "playlists": playlists})
 
 if __name__ == "__main__":
-    asyncio.run(app.run_task())
+    asyncio.run(app.run_task(host='0.0.0.0'))
