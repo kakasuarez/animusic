@@ -1,20 +1,11 @@
-import asyncio
-import webbrowser
 from pyppeteer import launch
 from bs4 import BeautifulSoup
 from items import Item
 
-def get_query():
-    return input("Please enter search query:\n").replace(" ", "-")
 
-def get_preference():
-    return input("Please mention your preference for opening tracks (press w for web version or a for desktop app).\n")
 
-async def main():
-    query = get_query()
-    preference = get_preference()
-    print("Scraping...Please wait.\n")
-    browser = await launch()
+async def main(query):
+    browser = await launch(defaultViewPort=None,handleSIGINT=False, handleSIGTERM=False, handleSIGHUP=False, headless=True, args=['--no-sandbox', '--disable-setuid-sandbox'])
     page = await browser.newPage()
     await page.goto("https://aniplaylist.com/{}".format(query), timeout=1000000)
     try:
@@ -35,21 +26,7 @@ async def main():
         anime = e.select_one(".card-image a figure div")["alt"]
         i = Item(name, anime, kind, url, user_url)
         if kind == "Playlist":
-            playlists.append(i)
+            playlists.append(i.__dict__)
         else:
-            songs.append(i)
-    print(f"Found {len(songs)} song(s), {len(playlists)} playlist(s).")
-    while True:
-        for index, song in enumerate(songs):
-            print(str(index) + ". ", song)
-        i = input("Please enter index of song you want to open or press q to exit.\n")
-        if i == "q": break
-        chosen_song = songs[int(i)]
-        if preference == "w":
-            chosen_song.open_in_browser()
-            print(f"Opened {chosen_song} in browser!")
-        else:
-            chosen_song.open_in_app()
-            print(f"Opened {chosen_song} in app!")
-
-asyncio.get_event_loop().run_until_complete(main())
+            songs.append(i.__dict__)
+    return songs, playlists
