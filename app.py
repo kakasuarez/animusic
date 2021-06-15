@@ -1,16 +1,18 @@
-from quart import Quart, request, jsonify
+from flask import Flask, request, jsonify
 import asyncio
 import scraper
 import os
-
-app = Quart(__name__)
+import nest_asyncio
+nest_asyncio.apply()
+app = Flask(__name__)
+loop = asyncio.get_event_loop()
 
 @app.route('/', methods=["GET"])
-async def hello():
+def hello():
     query = request.args.get("query")
-    songs, playlists = await scraper.main(query=query)
+    songs, playlists = loop.run_until_complete(scraper.main(query=query))
     return jsonify({"songs": songs, "playlists": playlists})
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
-    asyncio.run(app.run_task(host='0.0.0.0', port=port))
+    app.run(host='0.0.0.0', port=port, use_reloader=True, threaded=True)
