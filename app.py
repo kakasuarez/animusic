@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import asyncio
 import scraper
 import os
@@ -6,7 +7,7 @@ import nest_asyncio
 nest_asyncio.apply()
 app = Flask(__name__)
 loop = asyncio.get_event_loop()
-
+CORS(app)
 @app.route('/', methods=["GET"])
 def hello():
     query = request.args.get("query")
