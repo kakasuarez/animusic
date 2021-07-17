@@ -11,6 +11,8 @@ CORS(app)
 @app.route('/', methods=["GET"])
 def hello():
     query = request.args.get("query")
+    if not query:
+        return jsonify({"message": "Query must be provided."})
     songs, playlists = loop.run_until_complete(scraper.main(query=query))
     return jsonify({"songs": songs, "playlists": playlists})
 
