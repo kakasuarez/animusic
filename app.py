@@ -8,6 +8,8 @@ app = Quart(__name__)
 @app.route('/', methods=["GET"])
 async def hello():
     query = request.args.get("query")
+    if not query:
+        return "No query parameter.", 400
     songs, playlists = await scraper.main(query=query)
     return jsonify({"songs": songs, "playlists": playlists})
 
