@@ -11,7 +11,9 @@ async def hello():
     if not query:
         return "No query parameter.", 400
     songs, playlists = await scraper.main(query=query)
-    return jsonify({"songs": songs, "playlists": playlists})
+    response = jsonify({"songs": songs, "playlists": playlists})
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
